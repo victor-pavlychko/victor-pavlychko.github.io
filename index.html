@@ -1,0 +1,102 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style type="text/css">
+	html, body, #bg {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		overflow: hidden;
+		background: #040;
+		color: #0e0;
+		font-family: Menlo, Consolas, Courier, monospace;
+	}
+	#bgoverlay {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAAXNSR0IArs4c6QAAABBJREFUCB1jYGBgqAdiBgYAAwQAgEYqAO0AAAAASUVORK5CYII=);
+	}
+	#bgcontent {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 110%;
+	}
+	#bgcontent span {
+		display: inline-block;
+		margin: 0.66ex 0 0 0.66em;
+	}
+	.vignette:after {
+		-moz-box-shadow: inset 0 0 10em #000;
+		-webkit-box-shadow: inset 0 0 10em #000;
+		box-shadow: inset 0 0 10em #000;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 2;
+		content: "";
+	}
+	</style>
+</head>
+<body>
+	<div id="bg" class="vignette">
+		<div id="bgcontent"></div>
+		<div id="bgoverlay"></div>
+	</div>
+
+	<script type="text/javascript">
+	(function() {
+		var bg = document.getElementById("bg");
+		var bgcontent = document.getElementById("bgcontent");
+
+		var lpad = function(str, padString, length) {
+		    while (str.length < length) {
+		        str = padString + str;
+			}
+		    return str;
+		};
+
+		var randomAddress = function () {
+			return "0x" + lpad(Math.floor(Math.random() * 0xffffffff).toString(16), "0", 8);
+		};
+		
+		var clearNode = function(node) {
+			while (node.firstChild) {
+			    node.removeChild(node.firstChild);
+			}
+		};
+
+		var buildContent = function () {
+			for (var j = 0; j < 50; ++j) {
+				if (bgcontent.offsetHeight > bg.offsetHeight * 1.1) {
+					break;
+				}
+				for (var i = 0; i < 100; ++i) {
+					var span = document.createElement("span");
+					span.innerHTML = randomAddress();
+					bgcontent.appendChild(span);
+					bgcontent.appendChild(document.createTextNode(" "));
+				}
+			}
+		};
+
+		var updateContent = function () {
+			bgcontent.removeChild(bgcontent.firstChild);
+			bgcontent.removeChild(bgcontent.firstChild);
+			buildContent();
+		};
+
+		buildContent();
+		window.setInterval(updateContent, 50);
+	})();
+	</script>
+</body>
+</html>
