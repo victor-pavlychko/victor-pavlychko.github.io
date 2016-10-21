@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <style>
+        html, body, div {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        body {
+            background: url(i1.png);
+        }
+        div {
+            background: url(i2.png);
+        }
+    </style>
+    <script>
+        window.setInterval(
+            function() {
+              document.getElementById("inner").style.display = (document.getElementById("inner").style.display == "block") ? "none" : "block";
+            },
+            1000 / 15
+        )
+    </script>
+</head>
+<body>
+    <div id="inner"></div>
+</body>
+<html>
